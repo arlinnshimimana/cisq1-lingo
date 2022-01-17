@@ -15,7 +15,7 @@
     <description>Lingo trainer for CISQ1 at the HU</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>14</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -76,6 +76,22 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>6.5.2</version>
+                <configuration>
+                    <format>ALL</format>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                </plugin>
         </plugins>
     </build>
+
 </project>
