@@ -1,4 +1,10 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-public class GameStatus {
+
+public enum GameStatus {
+    Open,
+    Playing,
+    Closed;
+
+
 }

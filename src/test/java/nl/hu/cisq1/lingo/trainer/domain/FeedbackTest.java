@@ -38,7 +38,7 @@ class FeedbackTest {
     @Test
     @DisplayName("word guessed is not valid")
     void guessIsNotValid(){
-        Feedback feedback = new Feedback("wos", List.of(Mark.Absent,Mark.Correct,Mark.Correct,Mark.Correct,Mark.Correct));
+        Feedback feedback = new Feedback("wos", List.of(Mark.Invalid,Mark.Invalid,Mark.Invalid));
         assertFalse(feedback.guessIsValid());
     }
 
@@ -54,6 +54,7 @@ class FeedbackTest {
 
     static Stream<Arguments> provideHintExamples() {
         return Stream.of(
+                Arguments.of("w....","woorden", List.of(Mark.Invalid,Mark.Invalid,Mark.Invalid,Mark.Invalid,Mark.Invalid,Mark.Invalid,Mark.Invalid),"w...."),
                 Arguments.of("w....","waard", List.of(Mark.Correct,Mark.Absent,Mark.Absent,Mark.Correct,Mark.Correct),"w..rd"),
                 Arguments.of("w..rd","woerd",List.of(Mark.Correct,Mark.Correct,Mark.Absent,Mark.Correct,Mark.Correct),"wo.rd"),
                 Arguments.of("wo.rd", "woord",List.of(Mark.Correct,Mark.Correct,Mark.Correct,Mark.Correct,Mark.Correct),"woord")

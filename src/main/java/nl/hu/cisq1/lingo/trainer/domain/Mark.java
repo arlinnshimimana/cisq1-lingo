@@ -4,9 +4,9 @@ public enum Mark {
     Correct,
     Absent,
     Present,
-    Invalid;
+    Invalid, None;
 
-    public static String getString(Mark feedback) throws Exception {
+    public static String getString(Mark feedback) {
         switch (feedback){
             case Correct:
                 return "Correct";
@@ -17,7 +17,7 @@ public enum Mark {
             case Invalid:
                 return "Invalid";
         }
-        throw new Exception("Status unknown, use one of the following: Correct, Absent, Present or Invalid");
+        return null;
     }
 
 }

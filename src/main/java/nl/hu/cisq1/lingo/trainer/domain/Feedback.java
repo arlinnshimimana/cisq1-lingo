@@ -1,11 +1,18 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 import java.util.Objects;
 
+@ToString
+@EqualsAndHashCode
 public class Feedback {
-    private String attempt;
-    private List<Mark> mark;
+  @Getter @Setter private final String attempt;
+  @Getter @Setter private final List<Mark> mark;
 
    // public Feedback(String attempt, List<Mark> marks){}
     public Feedback(String attempt, List<Mark> mark){
@@ -13,31 +20,9 @@ public class Feedback {
         this.mark = mark;
     }
 
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "attempt='" + attempt + '\'' +
-                ", mark=" + mark +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Feedback feedback = (Feedback) o;
-        return Objects.equals(attempt, feedback.attempt) &&
-                Objects.equals(mark, feedback.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(attempt, mark);
-    }
-
     public boolean isWordGuessed(){
         for(Mark m: this.mark){
-            if(m != m.Correct){
+            if(m != Mark.Correct){
                 return false;
             }
         }
@@ -45,7 +30,7 @@ public class Feedback {
     }
 
     public boolean guessIsValid() {
-        if(5 <= attempt.length() && attempt.length() <=7){
+        if(5 <= attempt.length() && attempt.length() <= 7){
             return true;
         }
         return false;

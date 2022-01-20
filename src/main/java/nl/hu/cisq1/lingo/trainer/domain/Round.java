@@ -1,18 +1,20 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.words.domain.exception.WordNotFoundException;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
 public class Round {
-    private String wordToGuess;
-    private int attempts;
-    private List<Feedback> feedbackHistory = new ArrayList<>();
-    private String laatsteHint;
-    private Game game;
+  @Getter @Setter private String wordToGuess;
+  @Getter @Setter private int attempts = 0;
+  @Getter @Setter private final List<Feedback> feedbackHistory = new ArrayList<>();
+  @Getter @Setter private String laatsteHint;
 
-    public Round(String wordToGuess, int attempts) {
+    public Round(String wordToGuess) {
         this.wordToGuess = wordToGuess;
         this.attempts = attempts;
         makeFirstHint(wordToGuess);
@@ -39,7 +41,6 @@ public class Round {
            // throw new WordNotFoundException(attempt);
         }
         feedback = new Feedback(attempt,marks);
-        System.out.println(feedback);
         feedbackHistory.add(feedback);
         attempts++;
     }
@@ -48,8 +49,9 @@ public class Round {
         this.feedbackHistory.add(feedback);
     }
 
-    public List<Feedback> getFeedbackHistory(){
-        return feedbackHistory;
+    public Feedback getLatestFeedback(){
+        Feedback feedback = feedbackHistory.get(feedbackHistory.size() - 1);
+        return feedback;
     }
     private void makeFirstHint(String wordToGuess){
         StringBuilder hint = new StringBuilder(wordToGuess);

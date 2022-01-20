@@ -16,21 +16,32 @@ class RoundTest {
 
     @Test
     @DisplayName("Valid guess is made")
-    void guess(){
-        Round round = mock(Round.class);
-        doNothing().when(round).guess(isA(String.class));
-        round.guess("woord");
+    void guessValid(){
+        Round round = new Round("waard");
+        round.guess("waren");
 
-        verify(round).guess("woord");
+        assertEquals(1,round.getAttempts());
+        assertFalse(round.getFeedbackHistory().isEmpty());
+        assertTrue(round.getLatestFeedback().getMark().contains(Mark.Present));
+    }
+    @Test
+    @DisplayName("guess is not valid")
+    void guessNotValid(){
+        Round round = new Round("waard");
+        round.guess("ademen");
 
+        assertEquals(1,round.getAttempts());
+        assertFalse(round.getFeedbackHistory().isEmpty());
+        assertTrue(round.getLatestFeedback().getMark().contains(Mark.Invalid));
     }
 
     @ParameterizedTest
     @DisplayName("gives correct hints")
     @MethodSource("giveHintExamples")
     void giveHint(String wordToguess, Feedback feedback, String expectedHint) throws Exception {
-        Round round = new Round(wordToguess,0);
+        Round round = new Round(wordToguess);
         round.addFeedback(feedback);
+        round.giveHint();
         assertEquals(expectedHint, round.giveHint());
     }
 

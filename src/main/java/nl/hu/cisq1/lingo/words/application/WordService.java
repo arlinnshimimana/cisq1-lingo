@@ -25,12 +25,5 @@ public class WordService {
                 .getValue();
     }
 
-    public boolean verifyWord(Word word){
-        if(this.wordRepository.findIfWordExist(word).isPresent()){
-            return true;
-        }
-        else {
-            throw new WordNotFoundException(word.getValue());
-        }
-    }
+
 }
