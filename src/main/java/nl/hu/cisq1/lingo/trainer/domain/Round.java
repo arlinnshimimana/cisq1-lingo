@@ -33,11 +33,14 @@ public class Round {
                 else marks.add(Mark.Absent);
             }
         }
-        else {
+        else
+        {
             for(var i = 0; i < attempt.length();i++){
                 marks.add(Mark.Invalid);
             }
+
         }
+        
         feedback = new Feedback(attempt,marks);
         feedbackHistory.add(feedback);
         attempts++;
