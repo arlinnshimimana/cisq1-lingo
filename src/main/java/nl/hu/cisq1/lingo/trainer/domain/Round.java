@@ -16,7 +16,6 @@ public class Round {
 
     public Round(String wordToGuess) {
         this.wordToGuess = wordToGuess;
-        this.attempts = attempts;
         makeFirstHint(wordToGuess);
     }
 
@@ -38,7 +37,6 @@ public class Round {
             for(var i = 0; i < attempt.length();i++){
                 marks.add(Mark.Invalid);
             }
-           // throw new WordNotFoundException(attempt);
         }
         feedback = new Feedback(attempt,marks);
         feedbackHistory.add(feedback);
