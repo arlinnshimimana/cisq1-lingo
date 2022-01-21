@@ -3,7 +3,6 @@ package nl.hu.cisq1.lingo.trainer.application;
 import nl.hu.cisq1.lingo.trainer.data.GameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.words.application.WordService;
-import nl.hu.cisq1.lingo.words.domain.exception.StartNewRoundException;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +44,6 @@ class TrainerServiceTest {
         GameRepository gameRepository = mock(GameRepository.class);
 
         TrainerService service = new TrainerService(gameRepository, wordService);
-        //assertTrue(progress.getFeedbacks().isEmpty());
         assertThrows(WordLengthNotSupportedException.class,
                 ()-> service.startNewGame());
     }
@@ -59,7 +57,6 @@ class TrainerServiceTest {
         GameRepository gameRepository = mock(GameRepository.class);
 
         TrainerService service = new TrainerService(gameRepository, wordService);
-        //assertTrue(progress.getFeedbacks().isEmpty());
         assertThrows(WordLengthNotSupportedException.class,
                 ()-> service.startNewGame());
     }
