@@ -5,16 +5,25 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @ToString
 @EqualsAndHashCode
+@Entity
 public class Feedback {
-  @Getter @Setter private final String attempt;
-  @Getter @Setter private final List<Mark> mark;
+    @Id
+    @GeneratedValue
+    @Getter @Setter private Long id;
+    @Getter @Setter private String attempt;
 
-   // public Feedback(String attempt, List<Mark> marks){}
+    @ElementCollection
+    @Getter @Setter private List<Mark> mark;
+
+
+
+    public Feedback(){}
     public Feedback(String attempt, List<Mark> mark){
         this.attempt = attempt;
         this.mark = mark;

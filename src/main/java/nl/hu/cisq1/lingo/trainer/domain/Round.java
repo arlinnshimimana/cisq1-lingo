@@ -3,16 +3,30 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @ToString
+@Entity
 public class Round {
-  @Getter @Setter private String wordToGuess;
-  @Getter @Setter private int attempts = 0;
-  @Getter @Setter private final List<Feedback> feedbackHistory = new ArrayList<>();
-  @Getter @Setter private String laatsteHint;
+    @Id
+    @GeneratedValue
+    @Getter @Setter private Long id;
+
+    @Getter @Setter private String laatsteHint;
+    @Getter @Setter private String wordToGuess;
+    @Getter @Setter private int attempts = 0;
+
+    @OneToMany
+    @JoinColumn
+    @Cascade(CascadeType.ALL)
+    @Getter @Setter private final List<Feedback> feedbackHistory = new ArrayList<>();
+
+    public Round(){}
 
     public Round(String wordToGuess) {
         this.wordToGuess = wordToGuess;
@@ -40,7 +54,7 @@ public class Round {
             }
 
         }
-        
+
         feedback = new Feedback(attempt,marks);
         feedbackHistory.add(feedback);
         attempts++;

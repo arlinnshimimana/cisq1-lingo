@@ -4,15 +4,32 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
+import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
 @ToString
+@Entity
 public class Game {
+    @Id
+    @GeneratedValue
+    @Getter @Setter private Long id;
+
     @Getter @Setter private Integer score = 0;
-    @Getter @Setter private GameStatus gameStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Getter @Setter private GameStatus gameStatus = GameStatus.Open;
+
+    @OneToMany
+    @JoinColumn
+    @Cascade(CascadeType.ALL)
     @Getter @Setter private final List<Round> myRounds = new ArrayList<>();
+
+    public Game(){}
 
     public Game(Integer score, GameStatus gameStatus){
         this.score = score;
