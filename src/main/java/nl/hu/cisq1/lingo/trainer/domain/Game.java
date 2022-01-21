@@ -74,7 +74,8 @@ public class Game {
             this.myRounds.add(new Round(wordToGuess));
             setGameStatus(GameStatus.PLAYING);
         }
-        else
-        throw new StartNewRoundException(gameStatus);
+        else {
+            throw new StartNewRoundException(gameStatus);
+        }
     }
 }
