@@ -244,11 +244,11 @@
                                             <value>COVEREDRATIO</value>
                                             <minimum>0.85</minimum>
                                         </limit>
-                                        <limit>
-                                            <counter>CLASS</counter>
-                                            <value>MISSEDCOUNT</value>
-                                            <maximum>1</maximum>!!let op, moet je fixen, het moet 0 zijn!!!!
-                                        </limit>
+<!--                                        <limit>-->
+<!--                                            <counter>CLASS</counter>-->
+<!--                                            <value>MISSEDCOUNT</value>-->
+<!--                                            <maximum>1</maximum>!!let op, moet je fixen, het moet 0 zijn!!!!-->
+<!--                                        </limit>-->
                                     </limits>
                                 </rule>
                             </rules>
