@@ -65,8 +65,7 @@ public class Round {
     }
 
     public Feedback getLatestFeedback(){
-        Feedback feedback = feedbackHistory.get(feedbackHistory.size() - 1);
-        return feedback;
+        return feedbackHistory.get(feedbackHistory.size() -1);
     }
     private void makeFirstHint(String wordToGuess){
         StringBuilder hint = new StringBuilder(wordToGuess);
@@ -76,7 +75,7 @@ public class Round {
         this.laatsteHint = String.valueOf(hint);
     }
 
-    public String giveHint() throws Exception {
+    public String giveHint(){
         Feedback feedback = feedbackHistory.get(feedbackHistory.size() - 1);
         return feedback.giveHint(laatsteHint);
     }

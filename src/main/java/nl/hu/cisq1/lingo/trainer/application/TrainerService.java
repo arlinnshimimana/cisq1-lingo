@@ -16,14 +16,14 @@ public class TrainerService {
         this.gameRepository = gameRepository;
         this.wordService = wordService;
     }
-    public Progress startNewGame() throws Exception {
+    public Progress startNewGame(){
         String wordToGuess = this.wordService.provideRandomWord(5);
         Game game = new Game();
         game.startNewRound(wordToGuess);
         this.gameRepository.save(game);
         return game.showProgress();
     }
-    public Progress startNewRound(Long gameId) throws Exception {
+    public Progress startNewRound(Long gameId){
         Game game = getGameById(gameId);
         Integer nextLength = game.provideNexWordLength();
         String wordToGuess = this.wordService.provideRandomWord(nextLength);

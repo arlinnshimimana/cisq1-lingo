@@ -66,11 +66,15 @@ public class Game {
 
     }
 
-    public void startNewRound(String wordToGuess) throws Exception {
-        if(this.gameStatus.equals(GameStatus.OPEN)){
+    public void startNewRound(String wordToGuess){
+        if (wordToGuess.length() < 5 || wordToGuess.length() > 7) {
+            throw new WordLengthNotSupportedException(wordToGuess.length());
+        }
+        else if (this.gameStatus.equals(GameStatus.OPEN)) {
             this.myRounds.add(new Round(wordToGuess));
             setGameStatus(GameStatus.PLAYING);
         }
         else
-            throw new StartNewRoundException(gameStatus);}
+        throw new StartNewRoundException(gameStatus);
+    }
 }
