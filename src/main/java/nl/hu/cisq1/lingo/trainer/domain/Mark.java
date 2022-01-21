@@ -16,8 +16,9 @@ public enum Mark {
                 return "Present";
             case INVALID:
                 return "Invalid";
+            default:
+                return null;
         }
-        return null;
     }
 
 }
