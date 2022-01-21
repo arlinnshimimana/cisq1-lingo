@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @ToString
 @EqualsAndHashCode
@@ -31,7 +30,7 @@ public class Feedback {
 
     public boolean isWordGuessed(){
         for(Mark m: this.mark){
-            if(m != Mark.Correct){
+            if(m != Mark.CORRECT){
                 return false;
             }
         }
@@ -45,10 +44,9 @@ public class Feedback {
         return false;
     }
 
-    public String giveHint(String previusHint) throws Exception {
-        //String nextHint = previusHint;
+    public String giveHint(String previusHint) {
         StringBuilder nextHint = new StringBuilder(previusHint);
-        if(!mark.contains(Mark.Invalid)) {
+        if(!mark.contains(Mark.INVALID)) {
             for (var i = 0; i < attempt.length(); i++) {
                 if (Mark.getString(mark.get(i)).equals("Correct")) {
                     nextHint.setCharAt(i, attempt.charAt(i));

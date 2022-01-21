@@ -1,10 +1,7 @@
 package nl.hu.cisq1.lingo.words.application;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
-import nl.hu.cisq1.lingo.words.domain.Word;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
-import nl.hu.cisq1.lingo.words.domain.exception.WordNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

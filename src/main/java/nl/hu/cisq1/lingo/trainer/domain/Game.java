@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hu.cisq1.lingo.words.domain.exception.StartNewRoundException;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
@@ -22,7 +23,7 @@ public class Game {
     @Getter @Setter private Integer score = 0;
 
     @Enumerated(EnumType.STRING)
-    @Getter @Setter private GameStatus gameStatus = GameStatus.Open;
+    @Getter @Setter private GameStatus gameStatus = GameStatus.OPEN;
 
     @OneToMany
     @JoinColumn
@@ -37,17 +38,15 @@ public class Game {
     }
 
     public boolean isPlayerEliminated(){
-        return this.gameStatus.equals(GameStatus.Closed);
+        return this.gameStatus.equals(GameStatus.CLOSED);
     }
 
     public boolean isPlaying(){
-        return this.gameStatus.equals(GameStatus.Playing);
+        return this.gameStatus.equals(GameStatus.PLAYING);
     }
 
     public Progress showProgress(){
-        Round round = getCurrentRound();
-        Progress progress = new Progress(score,round.getLaatsteHint(),round.getFeedbackHistory());
-        return progress;
+        return new Progress(this.score,getCurrentRound().getLaatsteHint(),getCurrentRound().getFeedbackHistory());
     }
 
     public Round getCurrentRound(){
@@ -57,8 +56,7 @@ public class Game {
 
     public Integer provideNexWordLength() {
         if(getCurrentRound().getWordToGuess().length() < 7) {
-            Integer nextWordLenght = getCurrentRound().getWordToGuess().length() + 1;
-            return nextWordLenght;
+            return getCurrentRound().getWordToGuess().length() + 1;
         }
         else if(getCurrentRound().getWordToGuess().length() == 7) {
             return 5;
@@ -69,11 +67,10 @@ public class Game {
     }
 
     public void startNewRound(String wordToGuess) throws Exception {
-        if(this.gameStatus.equals(GameStatus.Open)){
+        if(this.gameStatus.equals(GameStatus.OPEN)){
             this.myRounds.add(new Round(wordToGuess));
-            setGameStatus(GameStatus.Playing);
+            setGameStatus(GameStatus.PLAYING);
         }
         else
-        throw new Exception("cannot start new round if player is eliminated or current round is playing. gamestatus: "+this.gameStatus.name());
-    }
+            throw new StartNewRoundException(gameStatus);}
 }

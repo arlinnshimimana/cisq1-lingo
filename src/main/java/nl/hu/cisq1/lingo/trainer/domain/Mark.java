@@ -1,20 +1,20 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 public enum Mark {
-    Correct,
-    Absent,
-    Present,
-    Invalid, None;
+    CORRECT,
+    ABSENT,
+    PRESENT,
+    INVALID, NONE;
 
     public static String getString(Mark feedback) {
         switch (feedback){
-            case Correct:
+            case CORRECT:
                 return "Correct";
-            case Absent:
+            case ABSENT:
                 return "Absent";
-            case Present:
+            case PRESENT:
                 return "Present";
-            case Invalid:
+            case INVALID:
                 return "Invalid";
         }
         return null;

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class RoundTest {
 
@@ -22,7 +21,7 @@ class RoundTest {
 
         assertEquals(1,round.getAttempts());
         assertFalse(round.getFeedbackHistory().isEmpty());
-        assertTrue(round.getLatestFeedback().getMark().contains(Mark.Present));
+        assertTrue(round.getLatestFeedback().getMark().contains(Mark.PRESENT));
     }
     @Test
     @DisplayName("guess is not valid")
@@ -32,7 +31,7 @@ class RoundTest {
 
         assertEquals(1,round.getAttempts());
         assertFalse(round.getFeedbackHistory().isEmpty());
-        assertTrue(round.getLatestFeedback().getMark().contains(Mark.Invalid));
+        assertTrue(round.getLatestFeedback().getMark().contains(Mark.INVALID));
     }
 
     @ParameterizedTest
@@ -47,9 +46,9 @@ class RoundTest {
 
     static Stream<Arguments> giveHintExamples() {
         return Stream.of(
-                Arguments.of("woord",new Feedback("waard", List.of(Mark.Correct,Mark.Absent,Mark.Absent,Mark.Correct,Mark.Correct)),"w..rd"),
-                Arguments.of("woord",new Feedback("woerd",List.of(Mark.Correct,Mark.Correct,Mark.Absent,Mark.Correct,Mark.Correct)),"wo.rd"),
-                Arguments.of("woord",new Feedback("woord",List.of(Mark.Correct,Mark.Correct,Mark.Correct,Mark.Correct,Mark.Correct)),"woord")
+                Arguments.of("woord",new Feedback("waard", List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.CORRECT)),"w..rd"),
+                Arguments.of("woord",new Feedback("woerd",List.of(Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.CORRECT)),"wo.rd"),
+                Arguments.of("woord",new Feedback("woord",List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT)),"woord")
 
         );
     }

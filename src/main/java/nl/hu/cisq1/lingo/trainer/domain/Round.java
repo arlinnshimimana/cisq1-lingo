@@ -39,18 +39,18 @@ public class Round {
         if(attempt.length() == wordToGuess.length() && attempts <5){
             for (var i = 0; i < wordToGuess.length(); i++){
                 if(attempt.charAt(i) == wordToGuess.charAt(i)){
-                    marks.add(Mark.Correct);
+                    marks.add(Mark.CORRECT);
                 }
                 else if(wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.Present);
+                    marks.add(Mark.PRESENT);
                 }
-                else marks.add(Mark.Absent);
+                else marks.add(Mark.ABSENT);
             }
         }
         else
         {
             for(var i = 0; i < attempt.length();i++){
-                marks.add(Mark.Invalid);
+                marks.add(Mark.INVALID);
             }
 
         }

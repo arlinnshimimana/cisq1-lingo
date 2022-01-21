@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.awt.font.GlyphMetrics;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,20 +13,20 @@ class GameTest {
     private Game game;
     @BeforeEach
     void setUp(){
-        this.game = new Game(0,GameStatus.Open);
+        this.game = new Game(0,GameStatus.OPEN);
         Round round = new Round("woord");
-        Feedback feedback = new Feedback("waard", List.of(Mark.Correct,Mark.Absent,Mark.Absent,Mark.Correct,Mark.Correct));
+        Feedback feedback = new Feedback("waard", List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.CORRECT));
         round.getFeedbackHistory().add(feedback);
         game.getMyRounds().add(round);
         Round secondround = new Round("waarde");
-        Feedback secondfeedback = new Feedback("woedde", List.of(Mark.Correct,Mark.Absent,Mark.Present,Mark.Present,Mark.Correct,Mark.Correct));
+        Feedback secondfeedback = new Feedback("woedde", List.of(Mark.CORRECT,Mark.ABSENT,Mark.PRESENT,Mark.PRESENT,Mark.CORRECT,Mark.CORRECT));
         secondround.getFeedbackHistory().add(secondfeedback);
         game.getMyRounds().add(secondround);
     }
     @Test
     @DisplayName("player is eliminated")
     void playerIsEliminated(){
-        game.setGameStatus(GameStatus.Closed);
+        game.setGameStatus(GameStatus.CLOSED);
         assertTrue(game.isPlayerEliminated());
     }
 
@@ -40,7 +39,7 @@ class GameTest {
     @Test
     @DisplayName("player is playing")
     void playerIsPlaying(){
-        game.setGameStatus(GameStatus.Playing);
+        game.setGameStatus(GameStatus.PLAYING);
         assertTrue(game.isPlaying());
     }
 
@@ -87,13 +86,13 @@ class GameTest {
     void startNewRound() throws Exception {
         System.out.println(game.getGameStatus());
         game.startNewRound("waard");
-        assertEquals(GameStatus.Playing,game.getGameStatus());
+        assertEquals(GameStatus.PLAYING,game.getGameStatus());
     }
 
     @Test
     @DisplayName("start new round exception")
     void startNewRoundException() throws Exception {
-        game.setGameStatus(GameStatus.Playing);
+        game.setGameStatus(GameStatus.PLAYING);
         assertThrows(Exception.class,
                 () ->game.startNewRound("waard"));
     }
