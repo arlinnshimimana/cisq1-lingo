@@ -4,6 +4,7 @@ import nl.hu.cisq1.lingo.trainer.data.GameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.words.application.WordService;
+import nl.hu.cisq1.lingo.words.domain.exception.GameNotFound;
 import org.springframework.stereotype.Service;
 
 
@@ -32,6 +33,6 @@ public class TrainerService {
     }
     private Game getGameById(Long gameId) {
         return this.gameRepository.findById(gameId)
-                .orElseThrow(() -> GameNotFound.withId(gameId));
+                .orElseThrow(() -> new GameNotFound(gameId));
     }
 }
