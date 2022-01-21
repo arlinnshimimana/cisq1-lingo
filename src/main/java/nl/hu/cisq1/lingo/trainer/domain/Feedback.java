@@ -38,10 +38,7 @@ public class Feedback {
     }
 
     public boolean guessIsValid() {
-        if(5 <= attempt.length() && attempt.length() <= 7){
-            return true;
-        }
-        return false;
+        return 5 <= attempt.length() && attempt.length() <= 7;
     }
 
     public String giveHint(String previusHint) {

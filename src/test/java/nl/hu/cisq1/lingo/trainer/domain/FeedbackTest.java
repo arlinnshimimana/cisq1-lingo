@@ -27,19 +27,22 @@ class FeedbackTest {
         assertFalse(feedback.isWordGuessed());
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("word guessed is valid")
-    void guessIsValid(){
-        Feedback feedback = new Feedback("woord", List.of(Mark.ABSENT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT));
-        assertTrue(feedback.guessIsValid());
+    @MethodSource("guessExamples")
+    void guessIsValid(Feedback feedback, boolean valid){
+        assertEquals(valid,feedback.guessIsValid());
     }
 
-    @Test
-    @DisplayName("word guessed is not valid")
-    void guessIsNotValid(){
-        Feedback feedback = new Feedback("wos", List.of(Mark.INVALID,Mark.INVALID,Mark.INVALID));
-        assertFalse(feedback.guessIsValid());
+    static Stream<Arguments> guessExamples() {
+        return Stream.of(
+                Arguments.of(new Feedback("waard", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT)), true),
+                Arguments.of(new Feedback("was", List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID)), false),
+                Arguments.of(new Feedback("bewijzen", List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID)), false)
+
+        );
     }
+
 
     @ParameterizedTest
     @DisplayName("hint are given based on previous hints and feedback")
@@ -60,4 +63,5 @@ class FeedbackTest {
 
         );
     }
+
 }
