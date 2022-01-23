@@ -34,7 +34,7 @@ public class Round {
         makeFirstHint(wordToGuess);
     }
 
-    public void guess(String attempt) throws GuessAttemptException {
+    public void guess(String attempt) {
         List<Mark> marks = new ArrayList<>();
         Feedback feedback;
         if(attempts < 5) {
@@ -55,9 +55,9 @@ public class Round {
 
             feedback = new Feedback(attempt,marks);
             feedbackHistory.add(feedback);
+            setLaatsteHint(giveHint());
         }
         else
-
         throw new GuessAttemptException();
     }
 
@@ -74,6 +74,10 @@ public class Round {
             hint.setCharAt(i, '.');
         }
         this.laatsteHint = String.valueOf(hint);
+    }
+
+    public boolean gameLost(){
+        return getLaatsteHint().contains(".") && getAttempts() == 5;
     }
 
     public String giveHint(){

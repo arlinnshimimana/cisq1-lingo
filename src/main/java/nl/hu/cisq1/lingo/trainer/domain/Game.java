@@ -32,11 +32,6 @@ public class Game {
 
     public Game(){}
 
-    public Game(Integer score, GameStatus gameStatus){
-        this.score = score;
-        this.gameStatus = gameStatus;
-    }
-
     public boolean isPlayerEliminated(){
         return this.gameStatus.equals(GameStatus.CLOSED);
     }
@@ -46,7 +41,10 @@ public class Game {
     }
 
     public Progress showProgress(){
-        return new Progress(this.score,getCurrentRound().getLaatsteHint(),getCurrentRound().getFeedbackHistory());
+//        if(id == null){
+//            return new Progress(this.score,getCurrentRound().getLaatsteHint(),getCurrentRound().getFeedbackHistory(),this.gameStatus);
+//        }
+        return new Progress(this.score,getCurrentRound().getLaatsteHint(),getCurrentRound().getFeedbackHistory(),this.gameStatus,id);
     }
 
     public Round getCurrentRound(){
@@ -77,5 +75,9 @@ public class Game {
         else {
             throw new StartNewRoundException(gameStatus);
         }
+    }
+
+    public Progress getProgress(Long id) {
+        return new Progress(this.score,getCurrentRound().getLaatsteHint(),getCurrentRound().getFeedbackHistory(),this.gameStatus,id);
     }
 }

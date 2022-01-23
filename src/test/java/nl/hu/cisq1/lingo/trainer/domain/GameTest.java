@@ -13,7 +13,8 @@ class GameTest {
     private Game game;
     @BeforeEach
     void setUp(){
-        this.game = new Game(0,GameStatus.OPEN);
+        this.game = new Game();
+        game.setId((long) 3);
         Round round = new Round("woord");
         Feedback feedback = new Feedback("waard", List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.CORRECT));
         round.getFeedbackHistory().add(feedback);

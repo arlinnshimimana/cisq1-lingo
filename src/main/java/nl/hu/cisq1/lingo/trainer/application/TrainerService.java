@@ -9,7 +9,9 @@ import nl.hu.cisq1.lingo.words.domain.exception.GameNotFound;
 import nl.hu.cisq1.lingo.words.domain.exception.GuessAttemptException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 
+@Transactional
 @Service
 public class TrainerService {
     private GameRepository gameRepository;
@@ -23,7 +25,7 @@ public class TrainerService {
         String wordToGuess = this.wordService.provideRandomWord(5);
         Game game = new Game();
         game.startNewRound(wordToGuess);
-        this.gameRepository.save(game);
+        game.setId(gameRepository.save(game).getId());
         return game.showProgress();
     }
     public Progress startNewRound(Long gameId){
@@ -36,15 +38,15 @@ public class TrainerService {
     }
     public Progress guess(String attempt, Long gameId){
         Game game = getGameById(gameId);
-        if(game.isPlayerEliminated()){
-            try {
-                game.getCurrentRound().guess(attempt);
-            }catch (GuessAttemptException ex){
-                game.setGameStatus(GameStatus.CLOSED);
-            }
+        if(game.isPlaying()){
+            game.getCurrentRound().guess(attempt);
         }
         if(!game.showProgress().getHint().contains(".")){
+            game.setScore(game.getScore()+10);
             game.setGameStatus(GameStatus.OPEN);
+        }
+        if(game.getCurrentRound().gameLost()){
+            game.setGameStatus(GameStatus.CLOSED);
         }
         this.gameRepository.save(game);
         return game.showProgress();

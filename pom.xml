@@ -229,7 +229,7 @@
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>0</maximum>!!let op, moet je fixen, het moet 0 zijn!!!!
+                                            <maximum>0</maximum>
                                         </limit>
                                     </limits>
                                 </rule>
