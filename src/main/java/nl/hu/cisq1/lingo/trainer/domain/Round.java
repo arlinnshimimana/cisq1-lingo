@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hu.cisq1.lingo.words.domain.exception.GuessAttemptException;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -33,31 +34,31 @@ public class Round {
         makeFirstHint(wordToGuess);
     }
 
-    public void guess(String attempt){
+    public void guess(String attempt) throws GuessAttemptException {
         List<Mark> marks = new ArrayList<>();
         Feedback feedback;
-        if(attempt.length() == wordToGuess.length() && attempts <5){
-            for (var i = 0; i < wordToGuess.length(); i++){
-                if(attempt.charAt(i) == wordToGuess.charAt(i)){
-                    marks.add(Mark.CORRECT);
+        if(attempts < 5) {
+            if (attempt.length() == wordToGuess.length()) {
+                for (var i = 0; i < wordToGuess.length(); i++) {
+                    if (attempt.charAt(i) == wordToGuess.charAt(i)) {
+                        marks.add(Mark.CORRECT);
+                    } else if (wordToGuess.contains(String.valueOf(attempt.charAt(i)))) {
+                        marks.add(Mark.PRESENT);
+                    } else marks.add(Mark.ABSENT);
                 }
-                else if(wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.PRESENT);
+            } else {
+                for (var i = 0; i < attempt.length(); i++) {
+                    marks.add(Mark.INVALID);
                 }
-                else marks.add(Mark.ABSENT);
             }
+            attempts++;
+
+            feedback = new Feedback(attempt,marks);
+            feedbackHistory.add(feedback);
         }
         else
-        {
-            for(var i = 0; i < attempt.length();i++){
-                marks.add(Mark.INVALID);
-            }
 
-        }
-
-        feedback = new Feedback(attempt,marks);
-        feedbackHistory.add(feedback);
-        attempts++;
+        throw new GuessAttemptException();
     }
 
     void addFeedback(Feedback feedback){

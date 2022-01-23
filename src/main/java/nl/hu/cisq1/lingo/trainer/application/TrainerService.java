@@ -2,9 +2,11 @@ package nl.hu.cisq1.lingo.trainer.application;
 
 import nl.hu.cisq1.lingo.trainer.data.GameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
+import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.words.domain.exception.GameNotFound;
+import nl.hu.cisq1.lingo.words.domain.exception.GuessAttemptException;
 import org.springframework.stereotype.Service;
 
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class TrainerService {
     private GameRepository gameRepository;
     private WordService wordService;
+
     public TrainerService(GameRepository gameRepository, WordService wordService){
         this.gameRepository = gameRepository;
         this.wordService = wordService;
@@ -31,7 +34,22 @@ public class TrainerService {
         this.gameRepository.save(game);
         return game.showProgress();
     }
-    private Game getGameById(Long gameId) {
+    public Progress guess(String attempt, Long gameId){
+        Game game = getGameById(gameId);
+        if(game.isPlayerEliminated()){
+            try {
+                game.getCurrentRound().guess(attempt);
+            }catch (GuessAttemptException ex){
+                game.setGameStatus(GameStatus.CLOSED);
+            }
+        }
+        if(!game.showProgress().getHint().contains(".")){
+            game.setGameStatus(GameStatus.OPEN);
+        }
+        this.gameRepository.save(game);
+        return game.showProgress();
+    }
+    private Game getGameById(Long gameId) throws GameNotFound {
         return this.gameRepository.findById(gameId)
                 .orElseThrow(() -> new GameNotFound(gameId));
     }
