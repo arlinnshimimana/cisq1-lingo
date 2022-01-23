@@ -19,6 +19,8 @@ public class TrainerController {
     public TrainerController(TrainerService service) {
         this.service = service;
     }
+
+    //aangepaste voorbeeld van school
     @PostMapping("/games")
     public Progress startNewGame() {
         return this.service.startNewGame();
@@ -32,6 +34,8 @@ public class TrainerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         }
     }
+
+    //aangepaste voorbeeld van school
     @PostMapping("/games/{id}/round")
     public Progress startNewRound(@PathVariable Long id) {
         try {

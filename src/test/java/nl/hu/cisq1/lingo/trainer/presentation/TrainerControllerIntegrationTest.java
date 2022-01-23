@@ -30,11 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(CiTestConfiguration.class)
 @AutoConfigureMockMvc
 public class TrainerControllerIntegrationTest {
-    //private static final Predicate<String> WORD_EXISTS = x -> true;
     @MockBean
     private SpringWordRepository wordRepository;
-//    @MockBean
-//    private GameRepository gameRepository;
+
     @Autowired
     private MockMvc mockMvc;
 
